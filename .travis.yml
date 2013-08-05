@@ -43,4 +43,4 @@ install:
 
 script:
   - cd Build
-  - ctest
+  - ctest -V
