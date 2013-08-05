@@ -1,0 +1,9 @@
+!|script             |TestSlimFixture             |Sam                      |
+|$TEST_SLIM_INSTANCE=|create test slim with string|Uncle                    |
+|check               |string arg                  |Sam                      |
+|reject              |is same                     |$TEST_SLIM_INSTANCE      |
+|check               |string arg from other       |$TEST_SLIM_INSTANCE|Uncle|
+
+!|script|$TEST_SLIM_INSTANCE        |
+|ensure |is same|$TEST_SLIM_INSTANCE|
+***!

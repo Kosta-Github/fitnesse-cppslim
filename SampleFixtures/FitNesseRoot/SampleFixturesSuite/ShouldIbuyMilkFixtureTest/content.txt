@@ -1,0 +1,11 @@
+!|Decision:ShouldIBuyMilkFixture                                |
+|cash in wallet|credit card|pints of milk remaining|go to store?|
+|0             |false      |0                      |false       |
+|10            |false      |0                      |true        |
+|0             |true       |0                      |true        |
+|10            |true       |0                      |true        |
+|0             |false      |1                      |false       |
+|10            |false      |1                      |false       |
+|0             |true       |1                      |false       |
+|10            |true       |1                      |nope        |
+***!
