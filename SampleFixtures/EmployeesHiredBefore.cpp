@@ -5,13 +5,13 @@
 #include "fitnesse/cppslim/Fixture.h"
 #include "fitnesse/cppslim/Registry.h"
 
-struct EmployeesHiredBeforeFixture : public slim::Fixture<EmployeesHiredBeforeFixture> {
+struct EmployeesHiredBefore : public slim::Fixture<EmployeesHiredBefore> {
     static void RegisterMethods() {
         RegisterCtor1<std::string>();
-        RegisterMethod("query", &EmployeesHiredBeforeFixture::query);
+        RegisterMethod("query", &EmployeesHiredBefore::query);
     }
 
-    EmployeesHiredBeforeFixture(const std::string& date) { }
+    EmployeesHiredBefore(const std::string& date) { }
 
     std::vector<std::vector<std::vector<std::string> > > query() const {
         std::vector<std::vector<std::vector<std::string> > > result;
@@ -32,4 +32,4 @@ struct EmployeesHiredBeforeFixture : public slim::Fixture<EmployeesHiredBeforeFi
         return result;
     }
 };
-SLIM_REGISTER_FIXTURE(EmployeesHiredBeforeFixture);
+SLIM_REGISTER_FIXTURE(EmployeesHiredBefore);

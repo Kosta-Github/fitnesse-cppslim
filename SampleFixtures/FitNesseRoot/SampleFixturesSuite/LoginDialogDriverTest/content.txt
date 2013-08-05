@@ -1,0 +1,25 @@
+!*** Test a "Script" table.
+
+!|Script            |Login dialog driver|Bob         |xyzzy                    |
+|login with username|Bob                |and password|xyzzy                    |
+|check              |login message      |Bob logged in.                        |
+|reject             |login with username|Bob         |and password|bad password|
+|check              |login message      |Bob not logged in.                    |
+|ensure             |login with username|Bob         |and password|xyzzy       |
+|note               |this is a comment                                         |
+|show               |number of login attempts                                  |
+|show               |login message                                             |
+|$symbol=           |login message                                             |
+
+!|Script            |Login dialog driver|Bob         |bad password             |
+|login with username|Bob                |and password|bad password             |
+|check not          |login message      |Alice logged in.                      |
+|reject             |login with username|Alice       |and password|bad password|
+|check              |login message      |Alice not logged in.                  |
+|ensure             |login with username|Bob         |and password|bad password|
+|note               |this is a comment                                         |
+|show               |number of login attempts                                  |
+|show               |login message                                             |
+|$symbol=           |login message                                             |
+
+***!

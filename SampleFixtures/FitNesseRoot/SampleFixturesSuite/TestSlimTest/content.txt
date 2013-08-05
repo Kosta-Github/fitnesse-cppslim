@@ -1,4 +1,6 @@
-!|script             |TestSlimFixture             |Sam                      |
+!*** Test a "Script" table in combination with a variable assignment.
+
+!|script             |Test slim                   |Sam                      |
 |$TEST_SLIM_INSTANCE=|create test slim with string|Uncle                    |
 |check               |string arg                  |Sam                      |
 |reject              |is same                     |$TEST_SLIM_INSTANCE      |
@@ -6,4 +8,5 @@
 
 !|script|$TEST_SLIM_INSTANCE        |
 |ensure |is same|$TEST_SLIM_INSTANCE|
+
 ***!

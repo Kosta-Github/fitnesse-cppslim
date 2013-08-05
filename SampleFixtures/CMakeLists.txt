@@ -13,10 +13,7 @@ endif(APPLE)
 set(Boost_USE_STATIC_LIBS       OFF)
 set(Boost_USE_MULTITHREADED     ON )
 set(Boost_USE_STATIC_RUNTIME    OFF)
-find_package(Boost REQUIRED COMPONENTS system)
-
-# configure pthread lib
-find_package(Threads REQUIRED)
+find_package(Boost REQUIRED COMPONENTS system thread)
 
 include_directories(
     ../
@@ -28,11 +25,11 @@ add_definitions(
 
 set(
     SRC_fitnesse_cppslim_sample_fixtures
-    BowlingFixture.cpp
-    EmployeesHiredBeforeFixture.cpp
-    LoginDialogDriverFixture.cpp
-    ShouldIBuyMilkFixture.cpp
-    TestSlimFixture.cpp
+    Bowling.cpp
+    EmployeesHiredBefore.cpp
+    LoginDialogDriver.cpp
+    ShouldBuyMilk.cpp
+    TestSlim.cpp
 )
 
 add_executable(
@@ -44,7 +41,6 @@ add_executable(
 target_link_libraries(
     SampleFixtures
     ${Boost_LIBRARIES}
-    ${CMAKE_THREAD_LIBS_INIT}
 )
 
 
@@ -59,7 +55,12 @@ file(
     EXPECTED_MD5 c357d8717434947ed4dbbf8de51a8016
 )
 
+# add a custom target for creating a symblic links for the FitNesseRoot folder...
+add_custom_target(SampleFixturesData ALL
+    COMMAND ${CMAKE_COMMAND} -E create_symlink \"${CMAKE_CURRENT_SOURCE_DIR}/FitNesseRoot\" \"${CMAKE_CURRENT_BINARY_DIR}/FitNesseRoot\"
+)
+
 add_test(
     NAME SampleFixturesTest
-    COMMAND java -jar fitnesse-standalone.jar -c "?names"
+    COMMAND java -jar fitnesse-standalone.jar -c "SampleFixturesSuite?suite&format=text"
 )

@@ -1,0 +1,17 @@
+!*** Test a "Query", a "Subset Query", and an "Ordered Query" table.
+
+!|Query:Employees hired before|10-Dec-1980                     |
+|employee number              |first name|last name|hire date  |
+|1429                         |Bob       |Martin   |10-Oct-1974|
+|8832                         |James     |Grenning |15-Dec-1979|
+
+!|Subset Query:Employees hired before|10-Dec-1980                     |
+|employee number                     |first name|last name|hire date  |
+|1429                                |Bob       |Martin   |10-Oct-1974|
+
+!|Ordered Query:Employees hired before|10-Dec-1980                     |
+|employee number                      |first name|last name|hire date  |
+|1429                                 |Bob       |Martin   |10-Oct-1974|
+|8832                                 |James     |Grenning |15-Dec-1979|
+
+***!

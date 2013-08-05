@@ -5,15 +5,15 @@
 #include "fitnesse/cppslim/Fixture.h"
 #include "fitnesse/cppslim/Registry.h"
 
-struct LoginDialogDriverFixture : public slim::Fixture<LoginDialogDriverFixture> {
+struct LoginDialogDriver : public slim::Fixture<LoginDialogDriver> {
     static void RegisterMethods() {
         RegisterCtor2<std::string, std::string>();
-        RegisterMethod("loginWithUsernameAndPassword",  &LoginDialogDriverFixture::loginWithUsernameAndPassword);
-        RegisterMember("numberOfLoginAttempts",         &LoginDialogDriverFixture::numberOfLoginAttempts);
-        RegisterMember("loginMessage",                  &LoginDialogDriverFixture::loginMessage);
+        RegisterMethod("loginWithUsernameAndPassword",  &LoginDialogDriver::loginWithUsernameAndPassword);
+        RegisterMember("numberOfLoginAttempts",         &LoginDialogDriver::numberOfLoginAttempts);
+        RegisterMember("loginMessage",                  &LoginDialogDriver::loginMessage);
     }
 
-    LoginDialogDriverFixture(const std::string& name_, const std::string& pw_) : name(name_), pw(pw_), loginMessage(), numberOfLoginAttempts(0) { }
+    LoginDialogDriver(const std::string& name_, const std::string& pw_) : name(name_), pw(pw_), loginMessage(), numberOfLoginAttempts(0) { }
 
     bool loginWithUsernameAndPassword(std::string userName, std::string password) {
         numberOfLoginAttempts++;
@@ -31,4 +31,4 @@ struct LoginDialogDriverFixture : public slim::Fixture<LoginDialogDriverFixture>
     std::string loginMessage;
     int numberOfLoginAttempts;
 };
-SLIM_REGISTER_FIXTURE(LoginDialogDriverFixture);
+SLIM_REGISTER_FIXTURE(LoginDialogDriver);
