@@ -1,4 +1,4 @@
 fitnesse-cppslim
 ================
 
-[![Build Status](https://travis-ci.org/Kosta-Github/fitnesse-cppslim.png)](https://travis-ci.org/Kosta-Github/fitnesse-cppslim) Travis CI build status
+[![Build Status](https://travis-ci.org/AIM360/fitnesse-cppslim.png)](https://travis-ci.org/AIM360/fitnesse-cppslim) Travis CI build status
