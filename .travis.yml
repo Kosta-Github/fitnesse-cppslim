@@ -6,11 +6,6 @@ compiler:
   - gcc
   - clang
 
-os:
-#  - windowsxp
-  - osx
-  - linux
-
 env:
   - BUILD_CONFIG=Debug
   - BUILD_CONFIG=Release
@@ -36,7 +31,7 @@ before_install:
   - sudo apt-get install openjdk-7-jre
 
 install:
-  - cmake -H./SampleFixtures -BBuild -DCMAKE_BUILD_TYPE=$BUILD_CONFIG
+  - cmake -H. -BBuild -DCMAKE_BUILD_TYPE=$BUILD_CONFIG
   - cd Build
   - make
   - cd ..

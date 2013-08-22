@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 2.8)
 
-project(fitnesse_cppslim C CXX)
+project(fitnesse_cppslim_samples C CXX)
 message("configure: fitnesse/cppslim/SampleFixtures")
 
 # switch to the right compiler
@@ -16,7 +16,7 @@ set(Boost_USE_STATIC_RUNTIME    OFF)
 find_package(Boost REQUIRED COMPONENTS system thread)
 
 include_directories(
-    ../
+    .
     ${Boost_INCLUDE_DIRS}
 )
 
@@ -25,16 +25,16 @@ add_definitions(
 
 set(
     SRC_fitnesse_cppslim_sample_fixtures
-    Bowling.cpp
-    EmployeesHiredBefore.cpp
-    LoginDialogDriver.cpp
-    ShouldBuyMilk.cpp
-    TestSlim.cpp
+    SampleFixtures/Bowling.cpp
+    SampleFixtures/EmployeesHiredBefore.cpp
+    SampleFixtures/LoginDialogDriver.cpp
+    SampleFixtures/ShouldBuyMilk.cpp
+    SampleFixtures/TestSlim.cpp
 )
 
 add_executable(
     SampleFixtures
-    main.cpp
+    SampleFixtures/main.cpp
     ${SRC_fitnesse_cppslim_sample_fixtures}
 )
 
@@ -57,7 +57,7 @@ file(
 
 # add a custom target for creating a symblic links for the FitNesseRoot folder...
 add_custom_target(SampleFixturesData ALL
-    COMMAND ${CMAKE_COMMAND} -E create_symlink \"${CMAKE_CURRENT_SOURCE_DIR}/FitNesseRoot\" \"${CMAKE_CURRENT_BINARY_DIR}/FitNesseRoot\"
+    COMMAND ${CMAKE_COMMAND} -E create_symlink \"${CMAKE_CURRENT_SOURCE_DIR}/SampleFixtures/FitNesseRoot\" \"${CMAKE_CURRENT_BINARY_DIR}/FitNesseRoot\"
 )
 
 add_test(
