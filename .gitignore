@@ -1,3 +1,9 @@
 .DS_Store
-
 /SampleFixtures/Build/
+Build
+SampleFixtures/FitNesseRoot/FitNesse
+SampleFixtures/FitNesseRoot/ErrorLogs
+SampleFixtures/FitNesseRoot/FrontPage
+SampleFixtures/FitNesseRoot/PageFooter
+SampleFixtures/FitNesseRoot/PageHeader
+SampleFixtures/FitNesseRoot/RecentChanges
