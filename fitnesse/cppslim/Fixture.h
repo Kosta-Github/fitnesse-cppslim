@@ -43,20 +43,19 @@ namespace slim {
             return obj;
         }
 
-
         static void RegisterBaseMethods() {
             RegisterMethod("table",         &Fixture::table);
             RegisterMethod("beginTable",    &Fixture::beginTable);
-            RegisterMethod("execute",       &Fixture::execute);
             RegisterMethod("reset",         &Fixture::reset);
+            RegisterMethod("execute",       &Fixture::execute);
             RegisterMethod("endTable",      &Fixture::endTable);
         }
 
-        // can be overridden in base classes if required
+        // can be overridden in derived classes if required
         virtual void table(List args)   { }
         virtual void beginTable()       { }
-        virtual void execute()          { }
         virtual void reset()            { }
+        virtual void execute()          { }
         virtual void endTable()         { }
 
     protected:

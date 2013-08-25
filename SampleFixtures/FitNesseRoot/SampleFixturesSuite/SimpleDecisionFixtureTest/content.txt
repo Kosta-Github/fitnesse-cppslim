@@ -2,3 +2,8 @@
 |a  |b   |c   |d?|e? |f?  |
 |1  |20  |300 |1 |20 |300 |
 |11 |222 |3333|11|222|3333|
+
+!|Decision: RevaDecision                                                        |
+|curve-length|normal-speed|max-lanes|max-speed?|minimum-curve-radius?|num-lanes?|
+|1           |20          |300      |1         |20                   |300       |
+|11          |222         |3333     |11        |222                  |3333      |

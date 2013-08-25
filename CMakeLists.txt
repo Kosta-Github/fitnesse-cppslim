@@ -28,6 +28,7 @@ set(
     SampleFixtures/Bowling.cpp
     SampleFixtures/EmployeesHiredBefore.cpp
     SampleFixtures/LoginDialogDriver.cpp
+    SampleFixtures/SimpleDecision.cpp
     SampleFixtures/ShouldBuyMilk.cpp
     SampleFixtures/TestSlim.cpp
 )
