@@ -3,7 +3,7 @@
 |1  |20  |300 |1 |20 |300 |
 |11 |222 |3333|11|222|3333|
 
-!|Decision: RevaDecision                                                        |
-|curve-length|normal-speed|max-lanes|max-speed?|minimum-curve-radius?|num-lanes?|
-|1           |20          |300      |1         |20                   |300       |
-|11          |222         |3333     |11        |222                  |3333      |
+!|Decision: RevaDecision  |my-standard-file.clips                               |
+|curve-length|normal-speed|max-lanes|max-speed?|minimum-curve-radius?|num-lanes?|standard-name?        |
+|1           |20          |300      |1         |20                   |300       |my-standard-file.clips|
+|11          |222         |3333     |11        |222                  |3333      |my-standard-file.clips|

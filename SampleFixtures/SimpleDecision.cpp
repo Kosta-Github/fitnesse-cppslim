@@ -29,17 +29,11 @@ class RevaDecision :
 {
 public:
     static void RegisterMethods() {
-        RegisterSingleton();
+        RegisterCtor1<std::string>();
     }
-
-    static std::string AdjustKey(const std::string& key) {
-        std::string newKey;
-        for(char c : key) {
-            if(std::isupper(c)) { newKey += '-'; }
-            newKey += std::tolower(c);
-        }
-        return newKey;
-    }
+	
+	RevaDecision(std::string standardName_) : standardName(standardName_) { }
+	const std::string standardName;
 
     virtual void setValue(const std::string& key, const std::string& value) {
         BaseClass::setValue(AdjustKey(key), value);
@@ -54,7 +48,17 @@ public:
         result["max-speed"]             = args["curve-length"];
         result["minimum-curve-radius"]  = args["normal-speed"];
         result["num-lanes"]             = args["max-lanes"];
+        result["standard-name"]         = standardName;
         return result;
+    }
+
+    static std::string AdjustKey(const std::string& key) {
+        std::string newKey;
+        for(char c : key) {
+            if(std::isupper(c)) { newKey += '-'; }
+            newKey += std::tolower(c);
+        }
+        return newKey;
     }
 
 };
