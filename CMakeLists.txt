@@ -28,6 +28,7 @@ set(
     SampleFixtures/Bowling.cpp
     SampleFixtures/EmployeesHiredBefore.cpp
     SampleFixtures/LoginDialogDriver.cpp
+    SampleFixtures/SimpleDecision.cpp
     SampleFixtures/ShouldBuyMilk.cpp
     SampleFixtures/TestSlim.cpp
 )
@@ -48,11 +49,13 @@ target_link_libraries(
 enable_testing()
 
 # download fitnesse server package
+message("fetching fitnesse server package")
 file(
     DOWNLOAD
     http://fitnesse.org/fitnesse-standalone.jar?responder=releaseDownload&release=20130530
     ${CMAKE_CURRENT_BINARY_DIR}/fitnesse-standalone.jar
     EXPECTED_MD5 c357d8717434947ed4dbbf8de51a8016
+    SHOW_PROGRESS
 )
 
 # add a custom target for creating a symblic links for the FitNesseRoot folder...

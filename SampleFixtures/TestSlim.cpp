@@ -2,7 +2,7 @@
 // Copyright (C) 2013 by Konstantin (Kosta) Baumann. All Rights Reserved.
 //
 
-#include "fitnesse/cppslim/Fixture.h"
+#include "fitnesse/cppslim/DecisionFixture.h"
 #include "fitnesse/cppslim/Registry.h"
 
 struct TestSlim : public slim::Fixture<TestSlim> {
