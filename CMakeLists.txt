@@ -45,12 +45,33 @@ set(
     SampleFixtures/TestSlim.cpp
 )
 
-add_executable(
-    SampleFixtures
-    SampleFixtures/main.cpp
-    ${SRC_fitnesse_cppslim_sample_fixtures}
+set(
+    HDR_fitnesse_cppslim
+    fitnesse/cppslim/Communication.h
+    fitnesse/cppslim/CommunicationLogger.h
+    fitnesse/cppslim/CommunicationSocket.h
+    fitnesse/cppslim/CommunicationStream.h
+    fitnesse/cppslim/Context.h
+    fitnesse/cppslim/ContextImpl.h
+    fitnesse/cppslim/DecisionFixture.h
+    fitnesse/cppslim/Exception.h
+    fitnesse/cppslim/Fixture.h
+    fitnesse/cppslim/FixtureBase.h
+    fitnesse/cppslim/List.h
+    fitnesse/cppslim/MetaObject.h
+    fitnesse/cppslim/ObjectWrapper.h
+    fitnesse/cppslim/Registry.h
+    fitnesse/cppslim/Slim.h
+    fitnesse/cppslim/TypeConverters.h
 )
 
+add_executable(
+     SampleFixtures
+     SampleFixtures/main.cpp
+     ${SRC_fitnesse_cppslim_sample_fixtures}
+     ${HDR_fitnesse_cppslim}
+)
+ 
 target_link_libraries(
     SampleFixtures
     ${Boost_LIBRARIES} pthread
