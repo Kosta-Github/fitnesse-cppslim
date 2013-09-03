@@ -12,12 +12,13 @@ int main(int argc, char** argv) {
 
     try {
 
+        int64_t port = 8050;
         if(argc < 2) {
-            std::cerr << "usage: " << argv[0] << " <port>" << std::endl;
-            return EXIT_SUCCESS;
+            std::cout << "using default port: " << port << std::endl;
+        } else {
+            port = std::stoi(argv[1]);
         }
-
-        const int64_t port = std::stoi(argv[1]);
+        
         if((port <= 0) || (65536 <= port)) {
             std::cerr << "invalid port: " << port << std::endl;
             return EXIT_FAILURE;
