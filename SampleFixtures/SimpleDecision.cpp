@@ -5,9 +5,7 @@
 #include "fitnesse/cppslim/DecisionFixture.h"
 #include "fitnesse/cppslim/Registry.h"
 
-class SimpleDecision :
-    public slim::DecisionFixture<SimpleDecision>
-{
+SLIM_DEFINE_DECISION_FIXTURE(SimpleDecision) {
 public:
     static void RegisterMethods() {
         RegisterSingleton();
@@ -22,11 +20,8 @@ public:
     }
 
 };
-SLIM_REGISTER_FIXTURE(SimpleDecision);
 
-class RevaDecision :
-    public slim::DecisionFixture<RevaDecision>
-{
+SLIM_DEFINE_DECISION_FIXTURE(RevaDecision) {
 public:
     static void RegisterMethods() {
         RegisterCtor1<std::string>();
@@ -62,4 +57,3 @@ public:
     }
 
 };
-SLIM_REGISTER_FIXTURE(RevaDecision);

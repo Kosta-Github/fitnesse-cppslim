@@ -5,7 +5,7 @@
 #include "fitnesse/cppslim/Fixture.h"
 #include "fitnesse/cppslim/Registry.h"
 
-struct ShouldBuyMilk : public slim::Fixture<ShouldBuyMilk> {
+SLIM_DEFINE_FIXTURE(ShouldBuyMilk) {
     static void RegisterMethods() {
         RegisterCtor0();
         RegisterMember("cashInWallet",          &ShouldBuyMilk::cashInWallet);
@@ -22,4 +22,3 @@ struct ShouldBuyMilk : public slim::Fixture<ShouldBuyMilk> {
 
     bool goToStore() const { return ((pintsOfMilkRemaining == 0) && ((cashInWallet > 2.0) || creditCard)); }
 };
-SLIM_REGISTER_FIXTURE(ShouldBuyMilk);

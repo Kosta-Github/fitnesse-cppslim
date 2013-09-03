@@ -5,7 +5,7 @@
 #include "fitnesse/cppslim/DecisionFixture.h"
 #include "fitnesse/cppslim/Registry.h"
 
-struct TestSlim : public slim::Fixture<TestSlim> {
+SLIM_DEFINE_FIXTURE(TestSlim) {
     static void RegisterMethods() {
         RegisterCtor0();
         RegisterCtor1<std::string>();
@@ -33,4 +33,3 @@ struct TestSlim : public slim::Fixture<TestSlim> {
     }
 
 };
-SLIM_REGISTER_FIXTURE(TestSlim);

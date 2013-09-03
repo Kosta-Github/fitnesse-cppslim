@@ -5,7 +5,7 @@
 #include "fitnesse/cppslim/Fixture.h"
 #include "fitnesse/cppslim/Registry.h"
 
-struct Bowling : public slim::Fixture<Bowling> {
+SLIM_DEFINE_FIXTURE(Bowling) {
     static void RegisterMethods() {
         RegisterCtor0();
         RegisterMethod("doTable", &Bowling::doTable);
@@ -25,4 +25,3 @@ struct Bowling : public slim::Fixture<Bowling> {
         }
     }
 };
-SLIM_REGISTER_FIXTURE(Bowling);

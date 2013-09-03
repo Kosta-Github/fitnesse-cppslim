@@ -5,7 +5,7 @@
 #include "fitnesse/cppslim/Fixture.h"
 #include "fitnesse/cppslim/Registry.h"
 
-struct LoginDialogDriver : public slim::Fixture<LoginDialogDriver> {
+SLIM_DEFINE_FIXTURE(LoginDialogDriver) {
     static void RegisterMethods() {
         RegisterCtor2<std::string, std::string>();
         RegisterMethod("loginWithUsernameAndPassword",  &LoginDialogDriver::loginWithUsernameAndPassword);
@@ -31,4 +31,3 @@ struct LoginDialogDriver : public slim::Fixture<LoginDialogDriver> {
     std::string loginMessage;
     int numberOfLoginAttempts;
 };
-SLIM_REGISTER_FIXTURE(LoginDialogDriver);

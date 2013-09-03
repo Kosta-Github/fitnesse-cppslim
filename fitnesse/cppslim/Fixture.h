@@ -210,3 +210,8 @@ namespace slim {
 
 #define SLIM_REGISTER_FIXTURE(FIXTURE) \
     template<> const bool slim::Fixture<FIXTURE>::s_registered = slim::Registry::Instance().registerFixture<FIXTURE>(#FIXTURE);
+
+#define SLIM_DEFINE_FIXTURE(FIXTURE)                \
+    struct FIXTURE;                                 \
+    SLIM_REGISTER_FIXTURE(FIXTURE)                  \
+    struct FIXTURE : public slim::Fixture<FIXTURE>

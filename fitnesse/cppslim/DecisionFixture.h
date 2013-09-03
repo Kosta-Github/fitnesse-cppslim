@@ -77,3 +77,8 @@ namespace slim {
     };
 
 } // namespace slim
+
+#define SLIM_DEFINE_DECISION_FIXTURE(FIXTURE)               \
+    struct FIXTURE;                                         \
+    SLIM_REGISTER_FIXTURE(FIXTURE)                          \
+    struct FIXTURE : public slim::DecisionFixture<FIXTURE>
