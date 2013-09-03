@@ -1,4 +1,9 @@
 .DS_Store
+
+CMakeLists.txt.user
+
 /Build/
 /SampleFixtures/FitNesseRoot/
 !/SampleFixtures/FitNesseRoot/SampleFixturesSuite
+
+qtcreator-build
