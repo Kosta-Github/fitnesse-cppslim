@@ -10,6 +10,8 @@
 #include "MetaObject.h"
 #include "TypeConverters.h"
 
+#include <locale>
+
 namespace slim {
 
     /// Derive from this class in order to specify a new fixture class available for testing.
@@ -168,7 +170,7 @@ namespace slim {
 
             // setter
             std::string setterName = "set" + name;
-            setterName[3] = ::toupper(setterName[3]);
+            setterName[3] = std::toupper(setterName[3], std::locale::classic());
             AddMethod(setterName, 1, [member](Context& ctx, T* obj, const List& args) -> List { CheckArgs(1, args); (obj->*member) = ctx.slim2typeConv<MEMBER>(args.elements[0]); return type2slim(ctx); });
         }
 
