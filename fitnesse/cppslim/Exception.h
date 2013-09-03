@@ -17,6 +17,8 @@ namespace slim {
         Exception(std::string message = std::string()) noexcept :
             m_message(std::move(message))
         { }
+        
+        virtual ~Exception() noexcept { }
 
         template<typename T>
         Exception& operator<<(const T& obj) {
