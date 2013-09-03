@@ -41,7 +41,7 @@ add_executable(
 
 target_link_libraries(
     SampleFixtures
-    ${Boost_LIBRARIES}
+    ${Boost_LIBRARIES} pthread
 )
 
 
