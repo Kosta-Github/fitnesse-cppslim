@@ -10,6 +10,7 @@
 #include "MetaObject.h"
 #include "TypeConverters.h"
 
+#include <iostream>
 #include <locale>
 
 namespace slim {
@@ -176,12 +177,16 @@ namespace slim {
 
     private:
         static void AddCtor(size_t argCount, std::function<std::shared_ptr<T>(Context& ctx, const List&)> ctor) {
-            assert(!MetaObject().ctors[argCount] && "constructor already registered with the given number of arguments");
+            if(MetaObject().ctors[argCount]) {
+            	MethodAlreadyRegistered("constructor", argCount);
+            }
             MetaObject().ctors[argCount] = std::move(ctor);
         }
 
         static void AddMethod(std::string name, size_t argCount, std::function<List(Context& ctx, T*, const List&)> func) {
-            assert(!MetaObject().methods[std::make_pair(name, argCount)] && "method already registered with the given number of arguments");
+            if(MetaObject().methods[std::make_pair(name, argCount)]) {
+            	MethodAlreadyRegistered(name, argCount);
+            }
             MetaObject().methods[std::pair<std::string, size_t>(std::move(name), argCount)] = std::move(func);
         }
 
@@ -191,6 +196,10 @@ namespace slim {
             }
         }
 
+		static void MethodAlreadyRegistered(const std::string& name, size_t argCount) {
+            std::cerr << "***** fixture: " << typeid(T).name() << ": method '" << name << "' with " << argCount << " arguments already registered!" << std::endl;
+        }
+        
     private:
         typedef impl::MetaObject<T> Registry;
         static Registry& MetaObject() { static Registry s_reg; return s_reg; }
