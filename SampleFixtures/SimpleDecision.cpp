@@ -5,8 +5,6 @@
 #include "fitnesse/cppslim/DecisionFixture.h"
 #include "fitnesse/cppslim/Registry.h"
 
-#include <locale>
-
 class SimpleDecision :
     public slim::DecisionFixture<SimpleDecision>
 {
@@ -57,7 +55,7 @@ public:
     static std::string AdjustKey(const std::string& key) {
         std::string newKey;
         for(char c : key) {
-            if(std::isupper(c)) { newKey += '-'; }
+            if(std::isupper(c, std::locale::classic())) { newKey += '-'; }
             newKey += std::tolower(c, std::locale::classic());
         }
         return newKey;

@@ -59,7 +59,7 @@ namespace slim {
                             throw (slim::Exception() << "invalid input variable name: " << funcName);
                         }
                         auto&& key = funcName.substr(3); // strip away leading "set"
-                        key[0] = std::tolower(key[0]); // first letter to lower case
+                        key[0] = std::tolower(key[0], std::locale::classic()); // first letter to lower case
                         setValue(key, args.elements[0].toString());
                         return slim::List();
                     }
