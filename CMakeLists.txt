@@ -4,10 +4,22 @@ project(fitnesse_cppslim_samples C CXX)
 message("configure: fitnesse/cppslim/SampleFixtures")
 
 # switch to the right compiler
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
-if(APPLE)
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -stdlib=libc++")
-endif(APPLE)
+if(MSVC)
+    add_definitions(
+        -D_CRT_SECURE_NO_DEPRECATE
+        -D_CRT_NONSTDC_NO_DEPRECATE
+        -D_CRT_SECURE_NO_WARNINGS
+        -D_SCL_SECURE_NO_WARNINGS
+        -DWINVER=0x0501
+        -D_WIN32_WINNT=0x0501
+        -DNOMINMAX
+    )
+else(MSVC)
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
+    if(APPLE)
+        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -stdlib=libc++")
+    endif(APPLE)
+endif(MSVC)
 
 # configure boost
 set(Boost_USE_STATIC_LIBS       OFF)
