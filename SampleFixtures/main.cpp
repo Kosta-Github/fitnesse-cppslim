@@ -12,7 +12,7 @@ int main(int argc, char** argv) {
 
     try {
 
-        int64_t port = 8050;
+        int64_t port = 8085;
         if(argc < 2) {
             std::cout << "using default port: " << port << std::endl;
         } else {
