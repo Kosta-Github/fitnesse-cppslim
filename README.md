@@ -10,3 +10,7 @@ You can browse some more very simple sample fixtures in the [SampleFixtures](Sam
 ----------
 
 More to come...
+
+----------
+
+License: use freely for whatever you want...
