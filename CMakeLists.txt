@@ -97,6 +97,11 @@ add_custom_target(SampleFixturesData ALL
 )
 
 add_test(
-    NAME SampleFixturesTest
-    COMMAND java -jar fitnesse-standalone.jar -c "SampleFixturesSuite?suite&format=text"
+    NAME SampleFixturesTest_Call_from_FitNesse_Server
+    COMMAND java -jar ./fitnesse-standalone.jar -c "SampleFixturesSuite?suite&format=text"
+)
+
+add_test(
+    NAME SampleFixturesTest_Call_Directly
+    COMMAND ./SampleFixtures -test "SampleFixturesSuite?suite" -port 9999
 )
