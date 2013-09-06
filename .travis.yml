@@ -38,4 +38,4 @@ install:
 
 script:
   - cd Build
-  - ctest -V
+  - ctest -V --timeout 60
