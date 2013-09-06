@@ -84,83 +84,83 @@ namespace slim {
 
     protected:
         static void RegisterSingleton() {
-            AddCtor(0, [](Context& ctx, const List& args) -> std::shared_ptr<T> { CheckArgs(0, args); static auto instance = std::make_shared<T>(); return instance; });
+            AddCtor(0, [](Context& ctx, const List& args) -> std::shared_ptr<T> { Fixture<T>::CheckArgs(0, args); static auto instance = std::make_shared<T>(); return instance; });
         }
 
     protected:
         static void RegisterCtor0() {
-            AddCtor(0, [](Context& ctx, const List& args) -> std::shared_ptr<T> { CheckArgs(0, args); return std::make_shared<T>(); });
+            AddCtor(0, [](Context& ctx, const List& args) -> std::shared_ptr<T> { Fixture<T>::CheckArgs(0, args); return std::make_shared<T>(); });
         }
 
         template<typename ARG1>
         static void RegisterCtor1() {
-            AddCtor(1, [](Context& ctx, const List& args) -> std::shared_ptr<T> { CheckArgs(1, args); return std::make_shared<T>(ctx.slim2typeConv<ARG1>(args.elements[0])); });
+            AddCtor(1, [](Context& ctx, const List& args) -> std::shared_ptr<T> { Fixture<T>::CheckArgs(1, args); return std::make_shared<T>(ctx.slim2typeConv<ARG1>(args.elements[0])); });
         }
 
         template<typename ARG1, typename ARG2>
         static void RegisterCtor2() {
-            AddCtor(2, [](Context& ctx, const List& args) -> std::shared_ptr<T> { CheckArgs(2, args); return std::make_shared<T>(ctx.slim2typeConv<ARG1>(args.elements[0]), ctx.slim2typeConv<ARG2>(args.elements[1])); });
+            AddCtor(2, [](Context& ctx, const List& args) -> std::shared_ptr<T> { Fixture<T>::CheckArgs(2, args); return std::make_shared<T>(ctx.slim2typeConv<ARG1>(args.elements[0]), ctx.slim2typeConv<ARG2>(args.elements[1])); });
         }
 
     protected:
         template<typename S>
         static void RegisterMethod(std::string name, void (S::*method)()) {
-            AddMethod(name, 0, [method](Context& ctx, S* obj, const List& args) -> List { CheckArgs(0, args); (obj->*method)(); return type2slim(ctx); });
+            AddMethod(name, 0, [method](Context& ctx, S* obj, const List& args) -> List { Fixture<T>::CheckArgs(0, args); (obj->*method)(); return type2slim(ctx); });
         }
 
         template<typename S>
         static void RegisterMethod(std::string name, void (S::*method)() const) {
-            AddMethod(name, 0, [method](Context& ctx, S* obj, const List& args) -> List { CheckArgs(0, args); (obj->*method)(); return type2slim(ctx); });
+            AddMethod(name, 0, [method](Context& ctx, S* obj, const List& args) -> List { Fixture<T>::CheckArgs(0, args); (obj->*method)(); return type2slim(ctx); });
         }
 
         template<typename S, typename RESULT>
         static void RegisterMethod(std::string name, RESULT (S::*method)()) {
-            AddMethod(name, 0, [method](Context& ctx, S* obj, const List& args) -> List { CheckArgs(0, args); return ctx.type2slimConv((obj->*method)()); });
+            AddMethod(name, 0, [method](Context& ctx, S* obj, const List& args) -> List { Fixture<T>::CheckArgs(0, args); return ctx.type2slimConv((obj->*method)()); });
         }
 
         template<typename S, typename RESULT>
         static void RegisterMethod(std::string name, RESULT (S::*method)() const) {
-            AddMethod(name, 0, [method](Context& ctx, S* obj, const List& args) -> List { CheckArgs(0, args); return ctx.type2slimConv((obj->*method)()); });
+            AddMethod(name, 0, [method](Context& ctx, S* obj, const List& args) -> List { Fixture<T>::CheckArgs(0, args); return ctx.type2slimConv((obj->*method)()); });
         }
 
         template<typename S, typename ARG1>
         static void RegisterMethod(std::string name, void (S::*method)(ARG1)) {
-            AddMethod(name, 1, [method](Context& ctx, S* obj, const List& args) -> List { CheckArgs(1, args); (obj->*method)(ctx.slim2typeConv<ARG1>(args.elements[0])); return type2slim(ctx); });
+            AddMethod(name, 1, [method](Context& ctx, S* obj, const List& args) -> List { Fixture<T>::CheckArgs(1, args); (obj->*method)(ctx.slim2typeConv<ARG1>(args.elements[0])); return type2slim(ctx); });
         }
 
         template<typename S, typename ARG1>
         static void RegisterMethod(std::string name, void (S::*method)(ARG1) const) {
-            AddMethod(name, 1, [method](Context& ctx, S* obj, const List& args) -> List { CheckArgs(1, args); (obj->*method)(ctx.slim2typeConv<ARG1>(args.elements[0])); return type2slim(ctx); });
+            AddMethod(name, 1, [method](Context& ctx, S* obj, const List& args) -> List { Fixture<T>::CheckArgs(1, args); (obj->*method)(ctx.slim2typeConv<ARG1>(args.elements[0])); return type2slim(ctx); });
         }
 
         template<typename S, typename RESULT, typename ARG1>
         static void RegisterMethod(std::string name, RESULT (S::*method)(ARG1)) {
-            AddMethod(name, 1, [method](Context& ctx, S* obj, const List& args) -> List { CheckArgs(1, args); return ctx.type2slimConv((obj->*method)(ctx.slim2typeConv<ARG1>(args.elements[0]))); });
+            AddMethod(name, 1, [method](Context& ctx, S* obj, const List& args) -> List { Fixture<T>::CheckArgs(1, args); return ctx.type2slimConv((obj->*method)(ctx.slim2typeConv<ARG1>(args.elements[0]))); });
         }
 
         template<typename S, typename RESULT, typename ARG1>
         static void RegisterMethod(std::string name, RESULT (S::*method)(ARG1) const) {
-            AddMethod(name, 1, [method](Context& ctx, S* obj, const List& args) -> List { CheckArgs(1, args); return ctx.type2slimConv((obj->*method)(ctx.slim2typeConv<ARG1>(args.elements[0]))); });
+            AddMethod(name, 1, [method](Context& ctx, S* obj, const List& args) -> List { Fixture<T>::CheckArgs(1, args); return ctx.type2slimConv((obj->*method)(ctx.slim2typeConv<ARG1>(args.elements[0]))); });
         }
 
         template<typename S, typename ARG1, typename ARG2>
         static void RegisterMethod(std::string name, void (S::*method)(ARG1, ARG2)) {
-            AddMethod(name, 2, [method](Context& ctx, S* obj, const List& args) -> List { CheckArgs(2, args); (obj->*method)(ctx.slim2typeConv<ARG1>(args.elements[0]), ctx.slim2typeConv<ARG2>(args.elements[1])); return type2slim(ctx); });
+            AddMethod(name, 2, [method](Context& ctx, S* obj, const List& args) -> List { Fixture<T>::CheckArgs(2, args); (obj->*method)(ctx.slim2typeConv<ARG1>(args.elements[0]), ctx.slim2typeConv<ARG2>(args.elements[1])); return type2slim(ctx); });
         }
 
         template<typename S, typename ARG1, typename ARG2>
         static void RegisterMethod(std::string name, void (S::*method)(ARG1, ARG2) const) {
-            AddMethod(name, 2, [method](Context& ctx, S* obj, const List& args) -> List { CheckArgs(2, args); (obj->*method)(ctx.slim2typeConv<ARG1>(args.elements[0]), ctx.slim2typeConv<ARG2>(args.elements[1])); return type2slim(ctx); });
+            AddMethod(name, 2, [method](Context& ctx, S* obj, const List& args) -> List { Fixture<T>::CheckArgs(2, args); (obj->*method)(ctx.slim2typeConv<ARG1>(args.elements[0]), ctx.slim2typeConv<ARG2>(args.elements[1])); return type2slim(ctx); });
         }
 
         template<typename S, typename RESULT, typename ARG1, typename ARG2>
         static void RegisterMethod(std::string name, RESULT (S::*method)(ARG1, ARG2)) {
-            AddMethod(name, 2, [method](Context& ctx, S* obj, const List& args) -> List { CheckArgs(2, args); return ctx.type2slimConv((obj->*method)(ctx.slim2typeConv<ARG1>(args.elements[0]), ctx.slim2typeConv<ARG2>(args.elements[1]))); });
+            AddMethod(name, 2, [method](Context& ctx, S* obj, const List& args) -> List { Fixture<T>::CheckArgs(2, args); return ctx.type2slimConv((obj->*method)(ctx.slim2typeConv<ARG1>(args.elements[0]), ctx.slim2typeConv<ARG2>(args.elements[1]))); });
         }
 
         template<typename S, typename RESULT, typename ARG1, typename ARG2>
         static void RegisterMethod(std::string name, RESULT (S::*method)(ARG1, ARG2) const) {
-            AddMethod(name, 2, [method](Context& ctx, S* obj, const List& args) -> List { CheckArgs(2, args); return ctx.type2slimConv((obj->*method)(ctx.slim2typeConv<ARG1>(args.elements[0]), ctx.slim2typeConv<ARG2>(args.elements[1]))); });
+            AddMethod(name, 2, [method](Context& ctx, S* obj, const List& args) -> List { Fixture<T>::CheckArgs(2, args); return ctx.type2slimConv((obj->*method)(ctx.slim2typeConv<ARG1>(args.elements[0]), ctx.slim2typeConv<ARG2>(args.elements[1]))); });
         }
 
     protected:
@@ -172,7 +172,7 @@ namespace slim {
             // setter
             std::string setterName = "set" + name;
             setterName[3] = std::toupper(setterName[3], std::locale::classic());
-            AddMethod(setterName, 1, [member](Context& ctx, T* obj, const List& args) -> List { CheckArgs(1, args); (obj->*member) = ctx.slim2typeConv<MEMBER>(args.elements[0]); return type2slim(ctx); });
+            AddMethod(setterName, 1, [member](Context& ctx, T* obj, const List& args) -> List { Fixture<T>::CheckArgs(1, args); (obj->*member) = ctx.slim2typeConv<MEMBER>(args.elements[0]); return type2slim(ctx); });
         }
 
     private:
