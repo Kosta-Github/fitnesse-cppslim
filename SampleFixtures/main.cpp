@@ -37,7 +37,7 @@ int main(int argc, char** argv) {
 		    std::cout << "directly calling test: " << testStr << std::endl;
 		    
 		    const std::string JAVA_COMMAND = "java";
-    		const std::string FITNESSE_JAR = "fitnesse-standalone.jar";
+    		const std::string FITNESSE_JAR = "fitnesse-standalone-20130530.jar";
     
 			std::string command;
 			command += JAVA_COMMAND + " ";

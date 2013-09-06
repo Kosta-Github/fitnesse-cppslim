@@ -82,23 +82,25 @@ target_link_libraries(
 enable_testing()
 
 # download fitnesse server package
-message("fetching fitnesse server package")
-file(
-    DOWNLOAD
-    http://fitnesse.org/fitnesse-standalone.jar?responder=releaseDownload&release=20130530
-    ${CMAKE_CURRENT_BINARY_DIR}/fitnesse-standalone.jar
-    EXPECTED_MD5 c357d8717434947ed4dbbf8de51a8016
-    SHOW_PROGRESS
-)
+set(FITNESSE_SERVER_JAR fitnesse-standalone-20130530.jar)
+#message("fetching fitnesse server package")
+#file(
+#    DOWNLOAD
+#    http://fitnesse.org/fitnesse-standalone.jar?responder=releaseDownload&release=20130530
+#    ${CMAKE_CURRENT_BINARY_DIR}/fitnesse-standalone.jar
+#    EXPECTED_MD5 c357d8717434947ed4dbbf8de51a8016
+#    SHOW_PROGRESS
+#)
 
 # add a custom target for creating a symblic links for the FitNesseRoot folder...
 add_custom_target(SampleFixturesData ALL
+    COMMAND ${CMAKE_COMMAND} -E create_symlink \"${CMAKE_CURRENT_SOURCE_DIR}/${FITNESSE_SERVER_JAR}\" \"${CMAKE_CURRENT_BINARY_DIR}\"
     COMMAND ${CMAKE_COMMAND} -E create_symlink \"${CMAKE_CURRENT_SOURCE_DIR}/SampleFixtures/FitNesseRoot\" \"${CMAKE_CURRENT_BINARY_DIR}/FitNesseRoot\"
 )
 
 add_test(
     NAME SampleFixturesTest_Call_from_FitNesse_Server
-    COMMAND java -jar ./fitnesse-standalone.jar -c "SampleFixturesSuite?suite&format=text"
+    COMMAND java -jar ./${CMAKE_CURRENT_BINARY_DIR} -c "SampleFixturesSuite?suite&format=text"
 )
 
 add_test(
