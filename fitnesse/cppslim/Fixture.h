@@ -167,7 +167,7 @@ namespace slim {
         template<typename MEMBER>
         static void RegisterMember(std::string name, MEMBER T::* member) {
             // getter
-            AddMethod(name, 0, [member](Context& ctx, T* obj, const List& args) -> List { CheckArgs(0, args); return ctx.type2slimConv(obj->*member); });
+            AddMethod(name, 0, [member](Context& ctx, T* obj, const List& args) -> List { Fixture<T>::CheckArgs(0, args); return ctx.type2slimConv(obj->*member); });
 
             // setter
             std::string setterName = "set" + name;
