@@ -41,6 +41,7 @@ set(
     SampleFixtures/EmployeesHiredBefore.cpp
     SampleFixtures/LoginDialogDriver.cpp
     SampleFixtures/SimpleDecision.cpp
+    SampleFixtures/SimpleQuery.cpp
     SampleFixtures/ShouldBuyMilk.cpp
     SampleFixtures/TestSlim.cpp
 )
@@ -60,6 +61,7 @@ set(
     fitnesse/cppslim/List.h
     fitnesse/cppslim/MetaObject.h
     fitnesse/cppslim/ObjectWrapper.h
+    fitnesse/cppslim/QueryFixture.h
     fitnesse/cppslim/Registry.h
     fitnesse/cppslim/Slim.h
     fitnesse/cppslim/TypeConverters.h

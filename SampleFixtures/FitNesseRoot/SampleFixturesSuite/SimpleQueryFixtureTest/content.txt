@@ -1,0 +1,4 @@
+!|Query: SimpleQuery|
+|a |b |c |
+|1 |2 |3 |
+|xx|yy|zz|

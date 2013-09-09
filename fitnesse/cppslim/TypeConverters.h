@@ -31,6 +31,9 @@ namespace slim {
     template<typename T>
     inline List type2slim(Context& ctx, const std::vector<T>& vec);
 
+    template<typename K, typename V>
+    inline List type2slim(Context& ctx, const std::map<K, V>& m);
+
     inline void slim2type(Context& ctx, const List& list, bool& result) {
         if(!list.isList && (list.string == "true"))  { result = true;  return; }
         if(!list.isList && (list.string == "false")) { result = false; return; }
@@ -66,6 +69,18 @@ namespace slim {
         List result;
         for(size_t i = 0, iEnd = vec.size(); i < iEnd; ++i) {
             result.elements.push_back(ctx.type2slimConv(vec[i]));
+        }
+        return result;
+    }
+    
+    template<typename K, typename V>
+    inline List type2slim(Context& ctx, const std::map<K, V>& m) {
+        List result;
+        for(auto&& i : m) {
+            List item;
+            item.elements.push_back(ctx.type2slimConv(i.first));
+            item.elements.push_back(ctx.type2slimConv(i.second));
+            result.elements.push_back(std::move(item));
         }
         return result;
     }
