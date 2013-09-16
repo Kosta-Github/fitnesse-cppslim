@@ -4,7 +4,7 @@ language: cpp
 
 compiler:
   - gcc
-  - clang
+  # - clang # disable clang for now; clang 3.2 seems to have issues with respect to std::future<> support
 
 env:
   - BUILD_CONFIG=Debug
@@ -32,10 +32,8 @@ before_install:
 
 install:
   - cmake -H. -BBuild -DCMAKE_BUILD_TYPE=$BUILD_CONFIG
-  - cd Build
-  - make
-  - cd ..
 
 script:
   - cd Build
-  - ctest -V --timeout 60
+  - make -k && ctest -V --timeout 60
+  - cd ..

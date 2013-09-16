@@ -102,7 +102,7 @@ add_custom_target(SampleFixturesData ALL
 
 add_test(
     NAME SampleFixturesTest_Call_from_FitNesse_Server
-    COMMAND java -jar ./${FITNESSE_SERVER_JAR} -DSLIM_PORT=8989 -c "SampleFixturesSuite?suite&format=text"
+    COMMAND java -DSLIM_PORT=8989 -jar ./${FITNESSE_SERVER_JAR} -c "SampleFixturesSuite?suite&format=text"
 )
 
 #add_test(

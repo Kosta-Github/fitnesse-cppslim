@@ -6,6 +6,8 @@
 
 #include "Exception.h"
 
+#include <algorithm>
+
 namespace slim {
 
     class Context;
@@ -22,12 +24,15 @@ namespace slim {
         std::string toString() const;
         std::string toSlim() const;
 
-        static List decode(const std::string& str);
-
     private:
         friend class Context;
-        static List decode(const char* str, int begin, int end);
-        static size_t decodeLength(const char* str, int begin, int end);
+
+        static std::string  lengthString(size_t len);
+
+        static List         decode(const char*& str);
+        static size_t       decodeLength(const char*& str);
+        static std::string  decodeString(const char*& str);
+        static List         decodeList(const char*& str);
     };
 
     inline std::ostream& operator<<(std::ostream& out, const List& list) {
@@ -36,15 +41,38 @@ namespace slim {
 
     namespace impl {
 
-        inline bool isNum(char c) { return (('0' <= c) && (c <= '9')); }
+        inline bool isDigit(const char c) {
+            return (('0' <= c) && (c <= '9'));
+        }
 
-        inline bool isList(const char* str, int begin, int end) {
-            return (
-                (end - begin >= 10) &&
-                (str[begin + 0] == '[') &&
-                (str[begin + 7] == ':') &&
-                (str[end   - 2] == ':') &&
-                (str[end   - 1] == ']')
+        inline size_t getDigit(const char*& str) {
+            if(!isDigit(*str)) {
+                throw (Exception() << "not a valid digit: " << str);
+            }
+            return (*str++ - '0');
+        }
+
+        inline void checkExpectedChar(const char*& str, const char c) {
+            if(*str != c) {
+                throw (Exception() << "expected char '" << c << "' missing: " << str);
+            }
+            ++str;
+        }
+
+        // see: http://en.wikipedia.org/wiki/UTF-8
+        inline bool isUtf8LeadingByte(const uint8_t c) {
+            return (((c >> 6) & 3) == 3);
+        }
+
+        // see: http://en.wikipedia.org/wiki/UTF-8
+        inline bool isUtf8ContinuationByte(const uint8_t c) {
+            return (((c >> 6) & 3) == 2);
+        }
+
+        // ignore all the continuation bytes, see: http://fitnesse.org/FitNesse.UserGuide.SliM.SlimProtocol
+        inline size_t calcSlimStringLength(const std::string& s) {
+            return std::count_if(
+                s.begin(), s.end(), [](const uint8_t c) { return !isUtf8ContinuationByte(c); }
             );
         }
 
@@ -55,94 +83,103 @@ namespace slim {
             return string;
         }
 
-        std::ostringstream out;
-        out << "[ ";
+        std::string out;
+        out += "[ ";
         for(size_t i = 0, iEnd = elements.size(); i < iEnd; ++i) {
-            if(i > 0) { out << ", "; }
-            out << elements[i];
+            if(i > 0) { out += ", "; }
+            out += elements[i].toString();
         }
-        out << " ]";
-        return out.str();
+        out += " ]";
+        return out;
     }
 
     inline std::string List::toSlim() const {
-        char buf[32];
         if(!isList) {
-            ::sprintf(buf, "%06d", int(string.size()));
-            return (std::string(buf) + ':' + string);
+            return (lengthString(impl::calcSlimStringLength(string)) + string);
         }
 
-        std::ostringstream out;
-        out << '[';
-
-        ::sprintf(buf, "%06d", int(elements.size()));
-        out << buf << ':';
-
+        std::string out;
+        out += '[';
+        out += lengthString(elements.size());
         for(size_t i = 0, iEnd = elements.size(); i < iEnd; ++i) {
-            out << elements[i].toSlim() << ':';
+            out += elements[i].toSlim() += ':';
         }
-        out << ']';
-        const std::string combined = out.str();
+        out += ']';
 
-        ::sprintf(buf, "%06d", int(combined.size()));
-        return (std::string(buf) + ':' + combined);
+        return (lengthString(impl::calcSlimStringLength(out)) + out);
+    }
 
-        return out.str();
+    inline std::string List::lengthString(const size_t len) {
+        char buf[32];
+        ::sprintf(buf, "%06d:", int(len));
+        return buf;
     }
 
     inline size_t List::decodeLength(
-        const char* str, int begin, int end
+        const char*& str
     ) {
-        if(
-            (end - begin != 7) ||
-            !impl::isNum(str[begin + 0]) || !impl::isNum(str[begin + 1]) || !impl::isNum(str[begin + 2]) ||
-            !impl::isNum(str[begin + 3]) || !impl::isNum(str[begin + 4]) || !impl::isNum(str[begin + 5]) ||
-            (str[begin + 6] != ':')
-        ) {
-            throw (Exception() << "not a valid length encoding: " << std::string(str + begin, str + end));
+        size_t result = 0;
+        for(int i = 0; i < 6; ++i) {
+            result = result * 10 + impl::getDigit(str);
         }
-
-        return (
-            size_t(str[begin + 0] - '0') * 100000 + size_t(str[begin + 1] - '0') * 10000 + size_t(str[begin + 2] - '0') * 1000 +
-            size_t(str[begin + 3] - '0') *    100 + size_t(str[begin + 4] - '0') *    10 + size_t(str[begin + 5] - '0') *    1
-        );
+        impl::checkExpectedChar(str, ':');
+        return result;
     }
 
     inline List List::decode(
-        const std::string& str
+        const char*& str
     ) {
-        return decode(str.c_str(), 0, static_cast<int>(str.length()));
+        if(*str == '[') {
+            return decodeList(str);
+        } else {
+            std::string s = decodeString(str);
+            if((s.length() >= 9) && (s[0] == '[') && (s[7] == ':') && (s.back() == ']')) {
+                // decode string list recursively
+                const char* str2 = s.c_str();
+                return decodeList(str2);
+            }
+            return List(std::move(s));
+        }
     }
 
-    inline List List::decode(
-        const char* str, int begin, int end
-    ) {
-        assert(begin <= end);
+    inline std::string List::decodeString(const char*& str) {
+        const size_t len = decodeLength(str);
 
-        if(!impl::isList(str, begin, end)) {
-            return List(std::string(str + begin, str + end));
-        }
+        std::string result;
+        result.reserve(len);
 
-        List result;
-
-        begin += 1; // skip opening '['
-        end   -= 1; // skip closing ']'
-
-        // decode list length
-        const size_t listLen = decodeLength(str, begin, begin + 7);
-        begin += 7;
-
-        for(size_t i = 0; i < listLen; ++i) {
-            const size_t subLen = decodeLength(str, begin, begin + 7);
-            begin += 7;
-
-            if((subLen > size_t(end - begin)) || (str[begin + subLen] != ':')) {
-                throw (Exception() << "invalid list entry detected: " << std::string(str + begin, str + end));
+        for(size_t i = 0; i < len; ++i) {
+            if(*str == 0x00) {
+                throw (Exception() << "parsed string is too short");
             }
 
-            result.elements.emplace_back(decode(str, begin, static_cast<int>(begin + subLen)));
-            begin += subLen + 1; // skip string plus terminating ':'
+            const char c = *str++;
+            result.push_back(c);
+
+            // handle multi-byte unicode chars
+            if(impl::isUtf8LeadingByte(c)) {
+                while(impl::isUtf8ContinuationByte(*str)) {
+                    result.push_back(*str++);
+                }
+            }
         }
+
+        impl::checkExpectedChar(str, ':');
+
+        return result;
+    }
+
+    inline List List::decodeList(const char*& str) {
+        impl::checkExpectedChar(str, '[');
+        const size_t len = decodeLength(str);
+
+        List result;
+        result.elements.reserve(len);
+        for(size_t i = 0; i < len; ++i) {
+            result.elements.push_back(decode(str));
+        }
+
+        impl::checkExpectedChar(str, ']');
 
         return result;
     }

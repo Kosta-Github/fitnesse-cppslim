@@ -9,4 +9,8 @@
 !|script|$TEST_SLIM_INSTANCE        |
 |ensure |is same|$TEST_SLIM_INSTANCE|
 
+Ensure that we can pass multi-byte unicode characters forth and back:
+!|script|Test slim |Unicode: 華語|
+|check  |string arg|Unicode: 華語|
+
 ***!

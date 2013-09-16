@@ -26,9 +26,9 @@ public:
     static void RegisterMethods() {
         RegisterCtor1<std::string>();
     }
-	
-	RevaDecision(std::string standardName_) : standardName(standardName_) { }
-	const std::string standardName;
+    
+    RevaDecision(std::string standardName_) : standardName(standardName_) { }
+    const std::string standardName;
 
     virtual void setValue(const std::string& key, const std::string& value) {
         BaseClass::setValue(AdjustKey(key), value);
