@@ -4,7 +4,7 @@ language: cpp
 
 compiler:
   - gcc
-  - clang
+  # - clang # disable clang for now; clang 3.2 seems to have issues with respect to std::future<> support
 
 env:
   - BUILD_CONFIG=Debug
