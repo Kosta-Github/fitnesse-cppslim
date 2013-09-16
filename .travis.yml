@@ -32,10 +32,8 @@ before_install:
 
 install:
   - cmake -H. -BBuild -DCMAKE_BUILD_TYPE=$BUILD_CONFIG
-  - cd Build
-  - make
-  - cd ..
 
 script:
   - cd Build
-  - ctest -V --timeout 60
+  - make -k && ctest -V --timeout 60
+  - cd ..
