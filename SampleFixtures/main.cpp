@@ -2,6 +2,7 @@
 #include "fitnesse/cppslim/ContextImpl.h"
 
 #include <cstdlib>
+#include <chrono>
 #include <future>
 #include <iostream>
 
@@ -32,9 +33,7 @@ int main(int argc, char** argv) {
             return EXIT_FAILURE;
         }
 
-        // clang 3.2 doesn't support a default constructable future<>
-        // use a unique_ptr<future<>> to work around this issue
-        std::unique_ptr<std::future<void>> callingFitnesse;
+        std::future<int> callingFitnesse;
         if(!testStr.empty()) {
             std::cout << "directly calling test: " << testStr << std::endl;
             
@@ -47,9 +46,7 @@ int main(int argc, char** argv) {
             command += "-jar " + FITNESSE_JAR + " ";
             command += "-c \"" + testStr + "&remote_debug&format=text\" ";
     
-            callingFitnesse.reset(new std::future<void>(std::move(
-                std::async([command]() { std::system(command.c_str()); })
-            )));
+            callingFitnesse = std::async([command]() { return std::system(command.c_str()); });
         }
         
         slim::CommunicationSocket comSocket(static_cast<uint16_t>(port));
