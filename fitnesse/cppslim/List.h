@@ -26,10 +26,13 @@ namespace slim {
 
     private:
         friend class Context;
-        static List decode(const char*& str);
-        static size_t decodeLength(const char*& str);
-        static std::string decodeString(const char*& str);
-        static List decodeList(const char*& str);
+
+        static std::string  lengthString(size_t len);
+
+        static List         decode(const char*& str);
+        static size_t       decodeLength(const char*& str);
+        static std::string  decodeString(const char*& str);
+        static List         decodeList(const char*& str);
     };
 
     inline std::ostream& operator<<(std::ostream& out, const List& list) {
@@ -54,12 +57,6 @@ namespace slim {
                 throw (Exception() << "expected char '" << c << "' missing: " << str);
             }
             ++str;
-        }
-
-        inline std::string getLengthString(const size_t len) {
-            char buf[32];
-            ::sprintf(buf, "%06d:", int(len));
-            return buf;
         }
 
         // see: http://en.wikipedia.org/wiki/UTF-8
@@ -98,18 +95,24 @@ namespace slim {
 
     inline std::string List::toSlim() const {
         if(!isList) {
-            return (impl::getLengthString(impl::calcSlimStringLength(string)) + string);
+            return (lengthString(impl::calcSlimStringLength(string)) + string);
         }
 
         std::string out;
         out += '[';
-        out += impl::getLengthString(elements.size());
+        out += lengthString(elements.size());
         for(size_t i = 0, iEnd = elements.size(); i < iEnd; ++i) {
             out += elements[i].toSlim() += ':';
         }
         out += ']';
 
-        return (impl::getLengthString(impl::calcSlimStringLength(out)) + out);
+        return (lengthString(impl::calcSlimStringLength(out)) + out);
+    }
+
+    inline std::string List::lengthString(const size_t len) {
+        char buf[32];
+        ::sprintf(buf, "%06d:", int(len));
+        return buf;
     }
 
     inline size_t List::decodeLength(

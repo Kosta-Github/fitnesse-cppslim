@@ -59,7 +59,16 @@ namespace slim {
                 }
 
                 List result = execute(commandList);
-                com.writeTo(result.toSlim());
+
+                // this is kind of ugly: we need to fix the length encoding here,
+                // since in this case we need to return the bytes count(!) not the
+                // chars...
+                std::string resultStr = result.toSlim();
+                const size_t bytes = resultStr.size() - 7;
+                const std::string bytesStr = List::lengthString(bytes);
+                std::copy(bytesStr.begin(), bytesStr.end(), resultStr.begin());
+
+                com.writeTo(resultStr);
             }
         } catch(const std::exception& ex) {
             List msg; msg.elements.emplace_back(std::string("__EXCEPTION__:ABORT_SLIM_TEST:message:<< \"") + ex.what() + "\" >>");
