@@ -44,6 +44,13 @@ namespace slim {
 
     inline void slim2type(Context& ctx, const List& list, List& result) { result = list; }
 
+    template<typename T>
+    inline void slim2type(Context& ctx, const List& list, std::vector<T>& result) {
+    	for(size_t i = 0, iEnd = list.elements.size(); i < iEnd; ++i) {
+    	    result.emplace_back(ctx.slim2typeConv<T>(list.elements[i]));
+    	}
+    }
+
     namespace impl {
 
         template<typename T>

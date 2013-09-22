@@ -42,6 +42,7 @@ set(
     SampleFixtures/LoginDialogDriver.cpp
     SampleFixtures/SimpleDecision.cpp
     SampleFixtures/SimpleQuery.cpp
+    SampleFixtures/SimpleTable.cpp
     SampleFixtures/ShouldBuyMilk.cpp
     SampleFixtures/TestSlim.cpp
 )
@@ -64,6 +65,7 @@ set(
     fitnesse/cppslim/QueryFixture.h
     fitnesse/cppslim/Registry.h
     fitnesse/cppslim/Slim.h
+    fitnesse/cppslim/TableFixture.h
     fitnesse/cppslim/TypeConverters.h
 )
 

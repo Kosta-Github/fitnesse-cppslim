@@ -10,7 +10,7 @@ namespace slim {
 
     /// Derive from this class and implement the query() method in case you want to deal with
     /// SliM query tables.
-    /// Usage: SLIM_QUERY_DECISION_FIXTURE(MyQueryFixture) { ... };
+    /// Usage: SLIM_DEFINE_QUERY_FIXTURE(MyQueryFixture) { ... };
     template<typename T>
     class QueryFixture :
         public slim::Fixture<T>
