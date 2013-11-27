@@ -14,11 +14,11 @@ namespace slim {
         public std::exception
     {
     public:
-        Exception(std::string message = std::string()) noexcept :
+        Exception(std::string message = std::string()) SLIM_NOEXCEPT :
             m_message(std::move(message))
         { }
         
-        virtual ~Exception() noexcept { }
+        virtual ~Exception() SLIM_NOEXCEPT { }
 
         template<typename T>
         Exception& operator<<(const T& obj) {
@@ -28,7 +28,7 @@ namespace slim {
             return *this;
         }
 
-        virtual const char* what() const noexcept {
+        virtual const char* what() const SLIM_NOEXCEPT {
             return m_message.c_str();
         }
 
