@@ -59,12 +59,13 @@ namespace slim {
                 }
 
                 List result = execute(commandList);
+                std::string resultStr = result.toSlim();
 
                 // this is kind of ugly: we need to fix the length encoding here,
                 // since in this case we need to return the bytes count(!) not the
                 // chars...
-                std::string resultStr = result.toSlim();
-                const size_t bytes = resultStr.size() - 7;
+                const size_t lengthStringLen = List::lengthString(0).size();
+                const size_t bytes = resultStr.size() - lengthStringLen;
                 const std::string bytesStr = List::lengthString(bytes);
                 std::copy(bytesStr.begin(), bytesStr.end(), resultStr.begin());
 
@@ -372,8 +373,13 @@ namespace slim {
     inline List Context::decodeNextMessage(
         Communication& com
     ) {
-        // first read 7 chars encoding the string length follow by a collon ':'
-        std::string header = com.readFrom(7);
+        // first read the digits until the first colon ':' is detected
+        std::string header;
+        do {
+            header += com.readFrom(1);
+        } while(header.back() != ':');
+
+        // the digits until the colon encode the actual length of the message
         const char* headerPtr = header.c_str();
         const size_t len = List::decodeLength(headerPtr);
 

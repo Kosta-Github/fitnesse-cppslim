@@ -111,7 +111,7 @@ namespace slim {
 
     inline std::string List::lengthString(const size_t len) {
         char buf[32];
-        ::sprintf(buf, "%06d:", int(len));
+        ::sprintf(buf, "%012d:", int(len));
         return buf;
     }
 
@@ -119,8 +119,12 @@ namespace slim {
         const char*& str
     ) {
         size_t result = 0;
-        for(int i = 0; i < 6; ++i) {
-            result = result * 10 + impl::getDigit(str);
+        while(*str != ':') {
+            const auto c = impl::getDigit(str);
+            if(result > std::numeric_limits<size_t>::max() / 10) {
+                throw (Exception() << "length value is too large: " << result << c);
+            }
+            result = 10 * result + c;
         }
         impl::checkExpectedChar(str, ':');
         return result;
@@ -133,7 +137,7 @@ namespace slim {
             return decodeList(str);
         } else {
             std::string s = decodeString(str);
-            if((s.length() >= 9) && (s[0] == '[') && (s[7] == ':') && (s.back() == ']')) {
+            if((s.length() > 2) && (s.front() == '[') && (s.back() == ']')) {
                 // decode string list recursively
                 const char* str2 = s.c_str();
                 return decodeList(str2);
