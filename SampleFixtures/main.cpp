@@ -1,4 +1,4 @@
-#include "fitnesse/cppslim/CommunicationSocket.h"
+#include "fitnesse/cppslim/CommunicationSocket_Boost.h"
 #include "fitnesse/cppslim/ContextImpl.h"
 
 #include <cstdlib>
@@ -49,7 +49,7 @@ int main(int argc, char** argv) {
             callingFitnesse = std::async([command]() { return std::system(command.c_str()); });
         }
         
-        slim::CommunicationSocket comSocket(static_cast<uint16_t>(port));
+        slim::CommunicationSocket_Boost comSocket(static_cast<uint16_t>(port));
 
         slim::Context ctx;
         ctx.handleSlimProtocol(comSocket);

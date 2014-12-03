@@ -111,7 +111,7 @@ namespace slim {
 
     inline std::string List::lengthString(const size_t len) {
         char buf[32];
-        ::sprintf(buf, "%012d:", int(len));
+        ::sprintf(buf, "%06d:", int(len));
         return buf;
     }
 

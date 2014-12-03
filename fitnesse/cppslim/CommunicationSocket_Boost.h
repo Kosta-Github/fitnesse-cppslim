@@ -16,11 +16,11 @@ namespace slim {
     /// implementation.
     /// TODO: This should be changed in the future to use a native platform socket
     /// implementation in order to remove the boost dependency again.
-    class CommunicationSocket :
+    class CommunicationSocket_Boost :
         public Communication
     {
     public:
-        CommunicationSocket(uint16_t port) :
+        CommunicationSocket_Boost(uint16_t port) :
             m_ioService(),
             m_acceptor(m_ioService, boost::asio::ip::tcp::endpoint(boost::asio::ip::tcp::v4(), port)),
             m_socket(m_ioService)
