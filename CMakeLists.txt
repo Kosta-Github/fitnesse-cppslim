@@ -93,11 +93,11 @@ target_link_libraries(
 enable_testing()
 
 # download fitnesse server package
-set(FITNESSE_SERVER_JAR fitnesse-standalone-20130530.jar)
+set(FITNESSE_SERVER_JAR fitnesse-standalone-20140901.jar)
 #message("fetching fitnesse server package")
 #file(
 #    DOWNLOAD
-#    http://fitnesse.org/fitnesse-standalone.jar?responder=releaseDownload&release=20130530
+#    http://fitnesse.org/fitnesse-standalone.jar?responder=releaseDownload&release=20140901
 #    ${CMAKE_CURRENT_BINARY_DIR}/fitnesse-standalone.jar
 #    EXPECTED_MD5 c357d8717434947ed4dbbf8de51a8016
 #    SHOW_PROGRESS
