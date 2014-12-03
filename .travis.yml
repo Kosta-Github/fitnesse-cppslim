@@ -14,20 +14,16 @@ before_install:
   # update git submodules (if required)
   - git submodule update --init --recursive
 
-  # update the apt repository
-  - sudo apt-get -qq update
-
-  # update gcc to 4.7 (travis defaults to 4.6.x)
-  - sudo apt-get -qq install g++-4.7
-  - sudo update-alternatives --quiet --install /usr/bin/gcc gcc /usr/bin/gcc-4.6 60 --slave /usr/bin/g++ g++ /usr/bin/g++-4.6 --slave /usr/bin/gcov gcov /usr/bin/gcov-4.6
-  - sudo update-alternatives --quiet --install /usr/bin/gcc gcc /usr/bin/gcc-4.7 40 --slave /usr/bin/g++ g++ /usr/bin/g++-4.7 --slave /usr/bin/gcov gcov /usr/bin/gcov-4.7
-  - sudo update-alternatives --quiet --set gcc /usr/bin/gcc-4.7
+  # pull in some common scripts for setting up Travis CI build environment
+  - git clone --depth=1 https://github.com/Kosta-Github/travis-setup.git
+  - sudo travis-setup/update-environment.sh
+  - sudo travis-setup/update-gcc-latest.sh
 
   # update the boost lib to 1.50 (travis defaults to 1.4x)
   - sudo apt-get -qq install libboost1.50-all-dev
 
   # install java runtime
-  - sudo apt-get install openjdk-7-jre
+  - sudo apt-get -qq install openjdk-7-jre
 
 install:
   - cmake -H. -BBuild -DCMAKE_BUILD_TYPE=$BUILD_CONFIG
