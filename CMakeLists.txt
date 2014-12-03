@@ -58,7 +58,8 @@ set(
     HDR_fitnesse_cppslim
     fitnesse/cppslim/Communication.h
     fitnesse/cppslim/CommunicationLogger.h
-    fitnesse/cppslim/CommunicationSocket.h
+    fitnesse/cppslim/CommunicationSocket_Boost.h
+    fitnesse/cppslim/CommunicationSocket_Qt.h
     fitnesse/cppslim/CommunicationStream.h
     fitnesse/cppslim/Context.h
     fitnesse/cppslim/ContextImpl.h
