@@ -20,11 +20,11 @@ before_install:
   - sudo travis-setup/update-gcc-latest.sh
 
   # update the boost lib to 1.50 (travis defaults to 1.4x)
-  - sudo add-apt-repository ppa:libreoffice/ppa
-  - sudo apt-get -qq install libboost1.54-all-dev
+  - sudo add-apt-repository -y ppa:libreoffice/ppa
+  - sudo apt-get install -y libboost1.54-all-dev
 
   # install java runtime
-  - sudo apt-get -qq install openjdk-7-jre
+  - sudo apt-get install -y openjdk-7-jre
 
 install:
   - cmake -H. -BBuild -DCMAKE_BUILD_TYPE=$BUILD_CONFIG
