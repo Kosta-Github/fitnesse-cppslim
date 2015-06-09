@@ -1,4 +1,4 @@
-fitnesse-cppslim [![Build Status](https://travis-ci.org/AIM360/fitnesse-cppslim.png)](https://travis-ci.org/AIM360/fitnesse-cppslim)
+fitnesse-cppslim [![Build Status](https://travis-ci.org/Kosta-Github/fitnesse-cppslim.png)](https://travis-ci.org/Kosta-Github/fitnesse-cppslim)
 ==========
 
 This is a C++ header only library for writting [FitNesse](http://fitnesse.org) test fixtures in C++. The only external dependency is on the [Boost library](http://boost.org) for handling the socket based communication between the FitNesse server and the FitNesse test runner.
